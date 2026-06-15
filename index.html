@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALEX ROWE // DIGITAL INFRASTRUCTURE & ARCHIVE</title>
+    <style>
+        /* Root & Theme variables */
+        :root {
+            --bg-color: #050505;
+            --container-bg: #0a0a0a;
+            --input-bg: #121212;
+            --border-color: #1a1a1a;
+            --border-focus: #333333;
+            --text-primary: #ffffff;
+            --text-secondary: #888888;
+            --text-muted: #444444;
+            --accent: #ff3366;
+            --accent-hover: #ff5588;
+        }
+
+        /* Base Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            letter-spacing: -0.01em;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Layout Grid */
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Section Spacing */
+        section {
+            margin-bottom: 120px;
+        }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 60px 0;
+            border: none;
+        }
+
+        /* Navigation Header */
+        header {
+            display: table;
+            width: 100%;
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+        .nav-logo {
+            display: table-cell;
+            text-align: left;
+            font-weight: 800;
+            letter-spacing: 3px;
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+        .nav-links {
+            display: table-cell;
+            text-align: right;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+        .nav-links span {
+            margin-left: 24px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .nav-links span:hover {
+            color: var(--accent);
+        }
+
+        /* Landing Component */
+        .landing-box {
+            background-color: var(--container-bg);
+            padding: 80px 40px;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        .landing-box hr {
+            border: 0;
+            border-top: 1px solid #222;
+            width: 60px;
+            margin: 30px auto;
+        }
+        .landing-brief {
+            line-height: 1.7;
+            max-width: 760px;
+            margin: 0 auto 30px auto;
+        }
+
+        /* Typography Config Helpers via standard layout styling */
+        .font-tracking-wide { letter-spacing: 5px; }
+        .font-tracking-tight { letter-spacing: -1px; }
+
+        /* Custom Responsive Image Grid simulated via standard display blocks for compatibility */
+        .grid-two-columns {
+            display: table;
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 20px 0;
+            margin-left: -20px;
+            margin-right: -20px;
+        }
+        .grid-cell-main {
+            display: table-cell;
+            width: 65%;
+            vertical-align: top;
+        }
+        .grid-cell-side {
+            display: table-cell;
+            width: 35%;
+            vertical-align: top;
+        }
+        
+        .frame-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            background: #111;
+            border: 1px solid var(--border-color);
+        }
+        .frame-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: filter 0.4s ease, transform 0.4s ease;
+        }
+        .frame-container img:hover {
+            transform: scale(1.01);
+        }
+
+        /* Project Archives Styles */
+        .archive-item {
+            margin-bottom: 80px;
+        }
+        .archive-item:last-child {
+            margin-bottom: 0;
+        }
+        .archive-meta {
+            font-family: "Georgia", Times New Roman, serif;
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-top: 20px;
+            max-width: 700px;
+        }
+        .archive-tag {
+            color: var(--text-primary);
+            font-family: -apple-system, sans-serif;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        /* Gear List Elements */
+        .section-title {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            border-left: 3px solid var(--accent);
+            padding-left: 12px;
+            font-weight: 700;
+        }
+        .gear-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .gear-item {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 15px;
+        }
+        .gear-item strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .gear-item span {
+            color: var(--text-secondary);
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        /* Pricing Matrix Table */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+        th {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            padding: 16px;
+            border-bottom: 2px solid var(--border-color);
+            background-color: var(--container-bg);
+        }
+        td {
+            padding: 20px 16px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.01);
+        }
+        .tier-title {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        .price-accent {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        /* Booking Intake Box */
+        .booking-container {
+            background-color: var(--container-bg);
+            padding: 50px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+        .booking-header {
+            margin-bottom: 35px;
+        }
+        .booking-title {
+            color: var(--text-primary);
+            margin: 0 0 8px 0;
+            font-size: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .booking-subtitle {
+            font-family: "Georgia", serif;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin: 0;
+            font-style: italic;
+        }
+        .form-group {
+            margin-bottom: 24px;
+        }
+        .form-label {
+            display: block;
+            color: #aaa;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 14px;
+            border-radius: 2px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: inherit;
+        }
+        .form-control:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.03);
+        }
+        select.form-control {
+            height: 50px;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%23888888'><polygon points='0,0 10,0 5,5'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+        }
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .btn-submit {
+            background-color: var(--accent);
+            color: var(--text-primary);
+            padding: 16px 36px;
+            border: none;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: background-color 0.2s, transform 0.1s;
+            width: 100%;
+            display: block;
+        }
+        .btn-submit:hover {
+            background-color: var(--accent-hover);
+        }
+        .btn-submit:active {
+            transform: scale(0.995);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 100px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Standard responsive handling using layout elements */
+        @media (max-width: 768px) {
+            .grid-cell-main, .grid-cell-side {
+                display: block;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .booking-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        
+        <!-- Minimal Navigation Line -->
+        <header>
+            <div class="nav-logo">AR // PHOTO</div>
+            <div class="nav-links">
+                <span>Archives</span>
+                <span>Optics</span>
+                <span>Rates</span>
+                <span>Intake</span>
+            </div>
+        </header>
+
+        <!-- Main Landing Stage -->
+        <section>
+            <div class="landing-box">
+                <!-- Controlled Typography Interplay using classic legacy structural scaling tags -->
+                <font face="Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif" size="7" color="#FFFFFF" class="font-tracking-wide">
+                    <b>VISUAL CHAOS.</b>
+                </font>
+                <br>
+                <font face="Georgia, Times New Roman, serif" size="7" color="#FF3366">
+                    <i>Perfectly Framed.</i>
+                </font>
+
+                <br><br><br>
+
+                <font face="Arial Black, Gadget, sans-serif" size="2" color="#666666" style="letter-spacing: 5px; text-transform: uppercase; display: block; margin-bottom: 10px;">
+                    PORTFOLIO OF ALEX ROWE — VISUAL ARTIST
+                </font>
+
+                <hr>
+
+                <div class="landing-brief">
+                    <font face="Georgia, Times New Roman, serif" size="5" color="#E5E5E5">
+                        "I pull narratives out of deep shadows and harsh light. This digital archive is a study of human vulnerability, brutalist forms, and the quiet spaces left in between."
+                    </font>
+                </div>
+
+                <br>
+
+                <font face="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" size="2" color="#FF3366" style="letter-spacing: 2px; font-weight: bold; text-transform: uppercase;">
+                    LOS ANGELES / TOKYO / PARIS // GLOBAL ARCHIVE
+                </font>
+            </div>
+        </section>
+
+        <!-- Hero Cinematic Block Layout -->
+        <section>
+            <div class="grid-two-columns">
+                <!-- Large landscape cinematic focal node -->
+                <div class="grid-cell-main">
+                    <div class="frame-container" style="aspect-ratio: 16/10;">
+                        <img 
+                          src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1200&q=85" 
+                          alt="Cinematic street frame with strong low-key light configurations" 
+                          loading="eager"
+                        />
+                    </div>
+                </div>
+                <!-- Vertical detailed structural element counter-weight -->
+                <div class="grid-cell-side">
+                    <div class="frame-container" style="aspect-ratio: 9/14;">
+                        <img 
+                          src="https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&w=800&q=85" 
+                          alt="High contrast geometric black and white street portrait study" 
+                          loading="eager"
+                          style="filter: grayscale(100%) contrast(1.25);"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Visual Archives & Series Summaries -->
+        <section>
+            <div class="section-title">FEATURED ARCHIVES</div>
+
+            <!-- Series Single Node 01 -->
+            <div class="archive-item">
+                <div class="frame-container" style="max-height: 550px; aspect-ratio: 21/9;">
+                    <img 
+                        src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1600&q=85" 
+                        alt="Long exposure night architectural photography assets" 
+                        loading="lazy"
+                        style="object-fit: cover; object-position: center;"
+                    />
+                </div>
+                <div class="archive-meta">
+                    <span class="archive-tag">[ SERIES 01 // CHIAROSCURO SOUL ]</span>
+                    An ongoing structural experiment capturing motion and static architecture simultaneously in Tokyo. Shot exclusively at midnight using long exposure plates to blend human light trails directly into the physical geometry of concrete monoliths.
+                </div>
+            </div>
+
+            <div style="height: 60px;"></div>
+
+            <!-- Series Single Node 02 -->
+            <div class="archive-item">
+                <div class="frame-container" style="max-height: 550px; aspect-ratio: 21/9;">
+                    <img 
+                        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85" 
+                        alt="Minimalist abstract architectural symmetry layout" 
+                        loading="lazy"
+                        style="object-fit: cover; object-position: center;"
+                    />
+                </div>
+                <div class="archive-meta">
+                    <span class="archive-tag">[ SERIES 02 // THE OVERCAST MONOLOGUES ]</span>
+                    A minimalist study stripping away color to highlight form. Using natural softboxes created by heavy coastal fog layers, these frames strip brutalist architecture of its clinical nature, converting hard lines into painterly gradients.
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Optical Engineering Hardware Metrics -->
+        <section>
+            <div class="section-title">OPTICAL ENGINEERING // METRIC GLASS</div>
+            <ul class="gear-list">
+                <li class="gear-item">
+                    <strong>The Storyteller:</strong> 35mm f/1.4 Prime
+                    <span>── Deep micro-contrast engineered for ambient photojournalistic documentation.</span>
+                </li>
+                <li class="gear-item">
+                    <strong>The Purist:</strong> 50mm f/1.2 Ultra-Prime
+                    <span>── Zero distortion spherical mapping specialized for organic portraits.</span>
+                </li>
+                <li class="gear-item">
+                    <strong>The Portraitist:</strong> 85mm f/1.4 Tele-Prime
+                    <span>── Pin-sharp planar sharpness paired with painterly spatial compression backdrops.</span>
+                </li>
+                <li class="gear-item">
+                    <strong>The Workhorse:</strong> 24-70mm f/2.8 Cinema Zoom
+                    <span>── Uniform edge-to-edge resolution calibration optimized for unpredictable on-set workflows.</span>
+                </li>
+            </ul>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Pricing Array -->
+        <section>
+            <div class="section-title">COMMERCIAL & EDITORIAL RATES</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tier Architecture Portfolio</th>
+                            <th>Technical Deliverables & Structural Access</th>
+                            <th>Retainer Investment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="tier-title">01 // Editorial Baseline</td>
+                            <td>3-Hour Dedicated Session • 2 Select Locations • 15 Master Retouched Assets • Standard Private Publication Rights</td>
+                            <td class="price-accent">$1,200 USD</td>
+                        </tr>
+                        <tr>
+                            <td class="tier-title">02 // Commercial Syndicate</td>
+                            <td>Full Day Production Architecture (8 Hours) • Dedicated Digital Tech On-Set • Worldwide Commercial Buyout Licensing • 40 Ultra-High Fidelity Source Files</td>
+                            <td class="price-accent">$3,500 USD</td>
+                        </tr>
+                        <tr>
+                            <td class="tier-title">03 // Avant-Garde Fine Art</td>
+                            <td>Bespoke Experimental Fine-Art Synthesis • Custom Continuous Multi-Matrix Lighting Configuration • 10 Signed Material Archival Gallery Prints</td>
+                            <td class="price-accent">$1,800 USD</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Functional Intake Vector Contact Form -->
+        <section>
+            <div class="booking-container">
+                <div class="booking-header">
+                    <h3 class="booking-title">Initiate Production</h3>
+                    <p class="booking-subtitle">Let's align creative frequencies. Fill out the architectural brief blueprint below.</p>
+                </div>
+
+                <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Transmission simulated successfully.');">
+                    <div class="form-group">
+                        <label class="form-label">Identity / Entity Name</label>
+                        <input type="text" class="form-control" name="name" required placeholder="e.g., Jane Doe / Studio Syndicate">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Digital Coordinates (Email)</label>
+                        <input type="email" class="form-control" name="email" required placeholder="e.g., jane@coordinate.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Production Tier Scale</label>
+                        <select class="form-control" name="package">
+                            <option value="editorial">01 // Editorial Baseline ($1,200 USD)</option>
+                            <option value="commercial">02 // Commercial Syndicate ($3,500 USD)</option>
+                            <option value="fine-art">03 // Avant-Garde Fine Art ($1,800 USD)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Creative Manifesto / Brief Overview</label>
+                        <textarea class="form-control" name="message" required placeholder="Outline the underlying visual atmosphere, dimensional location parameters, and intended emotional frequency..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Transmit Project Parameters</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Minimal Footer System -->
+        <footer>
+            &copy; 2026 ALEX ROWE ARCHIVES. ALL SPECIFICATIONS COMPLIANT. ALL RIGHTS RESERVED.
+        </footer>
+
+    </div>
+
+</body>
+</html>
